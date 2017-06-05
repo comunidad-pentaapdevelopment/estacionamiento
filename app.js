@@ -7,6 +7,7 @@ var app = express();
 
 // cargar rutas
 var persona_routes = require('./routes/persona');
+var cuadra_routes = require('./routes/cuadra');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
 
 // rutas base
 app.use('/api', persona_routes);
+app.use('/api', cuadra_routes);
 
 
 module.exports = app;

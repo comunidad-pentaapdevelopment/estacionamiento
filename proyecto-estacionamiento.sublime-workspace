@@ -4,6 +4,42 @@
 		"selected_items":
 		[
 			[
+				"up",
+				"update"
+			],
+			[
+				"con",
+				"ConductorController"
+			],
+			[
+				"upda",
+				"updateConductor"
+			],
+			[
+				"condu",
+				"conductorUpdated"
+			],
+			[
+				"per",
+				"persona_routes"
+			],
+			[
+				"PER",
+				"persona"
+			],
+			[
+				"cua",
+				"CuadraSchema"
+			],
+			[
+				"Per",
+				"PersonaSchema"
+			],
+			[
+				"esta",
+				"estacionamiento"
+			],
+			[
 				"com",
 				"components"
 			],
@@ -102,10 +138,6 @@
 			[
 				"marg",
 				"margin-top"
-			],
-			[
-				"up",
-				"UploadService"
 			],
 			[
 				"he",
@@ -336,10 +368,6 @@
 				"content"
 			],
 			[
-				"con",
-				"content"
-			],
-			[
 				"pad",
 				"padding-bottom"
 			],
@@ -391,6 +419,38 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "models/persona.js",
+			"settings":
+			{
+				"buffer_size": 407,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "controllers/conductor.js",
+			"settings":
+			{
+				"buffer_size": 1789,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "routes/persona.js",
+			"settings":
+			{
+				"buffer_size": 407,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app.js",
+			"settings":
+			{
+				"buffer_size": 746,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -416,7 +476,13 @@
 	},
 	"file_history":
 	[
+		"/C/wamp64/www/Proyectos/Estacionamiento/models/cuadra.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/models/cuadra",
+		"/C/wamp64/www/Proyectos/Estacionamiento/app.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/services/jwt.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/index.js",
 		"/C/wamp64/www/Proyectos/Estacionamiento/package.json",
+		"/C/wamp64/www/Proyectos/Estacionamiento/middlewares/authenticated.js",
 		"/C/wamp64/www/Proyectos/Futbol5/client/src/app/models/turn.ts",
 		"/C/wamp64/www/Proyectos/Futbol5/client/src/app/app.module.ts",
 		"/C/wamp64/www/Proyectos/Futbol5/client/src/app/app.routing.ts",
@@ -537,13 +603,7 @@
 		"/C/xampp/htdocs/sistemaGastos/application/config/database.php",
 		"/C/xampp/htdocs/sistemaGastos/application/views/exitoso.php",
 		"/C/xampp/htdocs/Cajeros/app/Http/Controllers/CajerosController.php",
-		"/C/xampp/htdocs/Cajeros/resources/views/localizar.php",
-		"/C/xampp/htdocs/Cajeros/resources/views/buscarCajerosConDistancia.php",
-		"/C/xampp/htdocs/Cajeros/resources/views/buscarCajeros.php",
-		"/C/xampp/htdocs/Cajeros/resources/views/inicio.php",
-		"/C/xampp/htdocs/Cajeros/public/css/estilos.css",
-		"/C/xampp/htdocs/Cajeros/public/PNG/link.png",
-		"/C/xampp/htdocs/Cajeros/app/Http/routes.php"
+		"/C/xampp/htdocs/Cajeros/resources/views/localizar.php"
 	],
 	"find":
 	{
@@ -581,8 +641,114 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "models/persona.js",
+					"settings":
+					{
+						"buffer_size": 407,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								343,
+								343
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "controllers/conductor.js",
+					"settings":
+					{
+						"buffer_size": 1789,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1734,
+								1734
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "routes/persona.js",
+					"settings":
+					{
+						"buffer_size": 407,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								322,
+								340
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app.js",
+					"settings":
+					{
+						"buffer_size": 746,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								720,
+								720
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 57.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -642,6 +808,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 241.0,
+	"side_bar_width": 263.0,
 	"status_bar_visible": true
 }

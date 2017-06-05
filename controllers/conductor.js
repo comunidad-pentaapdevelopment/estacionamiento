@@ -3,10 +3,53 @@
 var fs = require('fs');
 var path = require('path');
 var bcrypt = require('bcrypt-nodejs');
+var mongoosePaginate = require ('mongoose-Pagination');
 var Persona = require('../models/persona');
 var jwt = require('../services/jwt');
-var Cuadra = require('../models/cuadra');
 
+function getConductor(req, res){
+	var conductorId = req.params.id;
+
+	Persona.findById(conductorId, (err, conductor) =>{
+		if(err){
+			res.status(500).send({message: 'Error en la petición'});
+		}else{
+			if(conductor.Rol != 'Conductor'){
+				res.status(404).send({message: 'El rol no es conductor'});
+			}else{
+				if(!conductor){
+				res.status(404).send({message: 'El conductor no existe'});
+				}else{
+				res.status(200).send({conductor});
+				}	
+			}
+		}
+	});
+}
+
+function getConductores(req, res){
+	if(req.params.page){
+		var page = req.params.page;
+	}else{
+		var page = 1;
+	}
+	var itemsPerPage = 4;
+
+	Persona.find().sort('Apellido').paginate(page, itemsPerPage, function(err,conductores,total){
+		if(err){
+			res.status(500).send({message:'Error en la petición'});
+		}else{
+			if(!conductores){
+				res.status(404).send({message:'No hay conductores!!'});
+			}else{
+				return res.status(200).send({
+					total_items: total,
+					conductores: conductores
+					});
+				}
+			}	
+	});
+}
 
 function saveConductor(req, res){
 	var persona = new Persona();
@@ -68,8 +111,26 @@ function updateConductor(req, res){
 	});
 }
 
+function deleteConductor(req, res){
+	var conductorId = req.params.id;
+
+	Persona.findByIdAndRemove(conductorId, (err, conductorRemoved) =>{
+		if(err){
+			res.status(500).send({message: 'Error en el servidor'});
+		}else{
+			if(!conductorRemoved){
+				res.status(404).send({message: 'No se ha borrado el conductor'});
+			}else{
+				res.status(200).send({persona: conductorRemoved});
+			}
+		}
+	});
+}
 
 module.exports = {
 	saveConductor,
-	updateConductor
+	updateConductor,
+	deleteConductor,
+	getConductor,
+	getConductores
 };
