@@ -50,9 +50,7 @@ function getConductores(req, res){
 			if(!conductores){
 				res.status(404).send({message: 'No hay conductores'});
 			}else{
-				if (Usuario.rol=='Conductor') {
-					res.status(200).send({conductores});
-				};
+				res.status(200).send({conductores});
 			}
 		}
 	});
@@ -66,8 +64,7 @@ function saveConductor(req, res){
 	var params = req.body;
 
 	usuario.nombreUsuario = params.nombreUsuario;
-	usuario.clave = params.clave;
-	usuario.rol = params.rol;
+	usuario.rol = "Conductor";
 	usuario.email = params.email;
 
 	if(params.clave){
