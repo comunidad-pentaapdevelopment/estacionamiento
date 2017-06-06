@@ -4,13 +4,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var PersonaSchema = Schema({
-		Nombre: String,
-		Apellido: String,
-		Dni: Number,
-		Rol: String,
-		Usuario: String,
-		Clave: String,
-		Saldo: Number,
+		nombre: String,
+		apellido: String,
+		dni: Number,
+		saldo: Number,
+		telefono: Number,
+		usuario: {type: Schema.ObjectId, ref:'Usuario'},
 		Cuadra: {type: Schema.ObjectId, ref:'Cuadra'},
 		RazonSocial: String,
 		NombreFantasia: String,

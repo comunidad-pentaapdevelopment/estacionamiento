@@ -14,7 +14,7 @@ api.get('/traerConductor/:id',  ConductorController.getConductor);
 api.get('/traerConductores/:page?', ConductorController.getConductores);
 api.post('/registrarConductor', ConductorController.saveConductor);
 api.put('/modificarConductor/:id', ConductorController.updateConductor);
-api.delete('/eliminarConductor/:id', ConductorController.deleteConductor);
+//api.delete('/eliminarConductor/:id', ConductorController.deleteConductor);
 
 // Operadores de Playa
 api.get('/traerOperador/:id',  OperadorController.getOperador);

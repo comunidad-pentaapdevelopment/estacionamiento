@@ -5,80 +5,87 @@ var path = require('path');
 var bcrypt = require('bcrypt-nodejs');
 var mongoosePaginate = require ('mongoose-Pagination');
 var Persona = require('../models/persona');
+var Usuario = require('../models/usuario');
 var jwt = require('../services/jwt');
 
 function getConductor(req, res){
 	var conductorId = req.params.id;
-
+    
 	Persona.findById(conductorId, (err, conductor) =>{
-		if(err){
+		var usuarioId = conductor.usuario;
+
+		Usuario.findById(usuarioId, (err, usuario) =>{
+			if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
-			if(conductor.Rol != 'Conductor'){
+			if(usuario.rol != 'Conductor'){
 				res.status(404).send({message: 'El rol no es conductor'});
 			}else{
 				if(!conductor){
 				res.status(404).send({message: 'El conductor no existe'});
 				}else{
 				res.status(200).send({conductor});
-				}	
+					}	
+				}
+			}
+		});	
+	});
+}
+
+function getConductores(req, res){
+	var usuarioId = req.params.Usuario;
+
+	if (!usuarioId) {
+		// sacar todos los conductores de la bd
+		var find = Persona.find({}).sort('Apellido'); // sort es para ordenar
+	}else{
+		// sacar los conductores de un usuario concreto de la bd
+		var find = Persona.find({usuario: usuarioId}).sort('nombreUsuario');
+	}
+
+	find.populate({path: 'usuario'}).exec((err, conductores) =>{
+		if(err){
+			res.status(500).send({message: 'Error en la petición'});
+		}else{
+			if(!conductores){
+				res.status(404).send({message: 'No hay conductores'});
+			}else{
+				if (Usuario.rol=='Conductor') {
+					res.status(200).send({conductores});
+				};
 			}
 		}
 	});
 }
 
-function getConductores(req, res){
-	if(req.params.page){
-		var page = req.params.page;
-	}else{
-		var page = 1;
-	}
-	var itemsPerPage = 4;
-
-	Persona.find().sort('Apellido').paginate(page, itemsPerPage, function(err,conductores,total){
-		if(err){
-			res.status(500).send({message:'Error en la petición'});
-		}else{
-			if(!conductores){
-				res.status(404).send({message:'No hay conductores!!'});
-			}else{
-				return res.status(200).send({
-					total_items: total,
-					conductores: conductores
-					});
-				}
-			}	
-	});
-}
-
 function saveConductor(req, res){
-	var persona = new Persona();
+	// Este metodo guarda un usuario primero y luego el conductor con el objeto de usuario
+
+	var usuario = new Usuario();
 
 	var params = req.body;
 
-	persona.Nombre = params.Nombre;
-	persona.Apellido = params.Apellido;
-	persona.Dni = params.Dni;
-	persona.Rol = 'Conductor';
-	persona.Usuario = params.Usuario;
-	persona.Saldo = 0;
+	usuario.nombreUsuario = params.nombreUsuario;
+	usuario.clave = params.clave;
+	usuario.rol = params.rol;
+	usuario.email = params.email;
 
-	if(params.Clave){
+	if(params.clave){
 		// Encriptar contraseña y guardar datos
-		bcrypt.hash(params.Clave,null,null,function(err,hash){
-			persona.Clave = hash;
+		bcrypt.hash(params.clave,null,null,function(err,hash){
+			usuario.clave = hash;
 
-			if(persona.Nombre != null && persona.Apellido != null && persona.Dni != null && persona.Usuario != null){
-				// Guarda la persona
-				persona.save((err,personaStored) => {
+			if(usuario.nombreUsuario != null  && usuario.email != null){
+				// Guarda el usuario
+				usuario.save((err,usuarioStored) => {
 					if(err){
-						res.status(500).send({message: 'Error al guardar la persona'});
+						res.status(500).send({message: 'Error al guardar el usuario'});
 					}else{
-						if(!personaStored){
-							res.status(404).send({message: 'No se ha registrado la persona'});
+						if(!usuarioStored){
+							res.status(404).send({message: 'No se ha registrado el usuario'});
 						}else
 						  {
-							res.status(200).send({persona: personaStored});
+							res.status(200).send({usuario: usuarioStored});
 						  }
 					}
 				});
@@ -91,6 +98,28 @@ function saveConductor(req, res){
 	}else{
 		res.status(500).send({message: 'Introduce la contraseña'});
 	}
+
+	var persona = new Persona();
+
+	persona.nombre = params.nombre;
+	persona.apellido = params.apellido;
+	persona.dni = params.dni;
+	persona.saldo = 0;
+	persona.telefono = params.telefono;
+	persona.usuario = usuario._id;
+
+
+	persona.save((err, conductorStored) => {
+		if(err){
+			res.status(500).send({message:'Error al guardar el conductor'});
+		}else{
+			if(!conductorStored){
+				res.status(404).send({message:'El conductor no ha sido guardado'});
+			}else{
+				res.status(200).send({persona: conductorStored});
+			}
+		}
+	});
 }
 
 function updateConductor(req, res){
@@ -111,7 +140,9 @@ function updateConductor(req, res){
 	});
 }
 
-function deleteConductor(req, res){
+// Ver bien si vamos a usar o no este metodo
+
+/*function deleteConductor(req, res){
 	var conductorId = req.params.id;
 
 	Persona.findByIdAndRemove(conductorId, (err, conductorRemoved) =>{
@@ -125,12 +156,12 @@ function deleteConductor(req, res){
 			}
 		}
 	});
-}
+}*/
 
 module.exports = {
 	saveConductor,
 	updateConductor,
-	deleteConductor,
+	//deleteConductor,
 	getConductor,
 	getConductores
 };
