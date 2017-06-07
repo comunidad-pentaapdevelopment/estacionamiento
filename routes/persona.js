@@ -5,6 +5,7 @@ var express = require('express');
 var ConductorController = require('../controllers/conductor');
 var OperadorController = require('../controllers/operadorDePlaya');
 var MunicipalController = require('../controllers/municipal');
+var AdminController = require('../controllers/admin');
 
 
 var api = express.Router();
@@ -27,13 +28,18 @@ api.put('/modificarOperador/:id', OperadorController.updateOperador);
 api.delete('/eliminarOperador/:id', OperadorController.deleteOperador);
 
 // Municipales
-
 api.get('/traerMunicipal/:id',  MunicipalController.getMunicipal);
 api.get('/traerMunicipales/:page?', MunicipalController.getMunicipales);
 api.post('/registrarMunicipal', MunicipalController.saveMunicipal);
 api.put('/modificarMunicipal/:id', MunicipalController.updateMunicipal);
 api.delete('/eliminarMunicipal/:id', MunicipalController.deleteMunicipal);
 
+// Admins
+api.get('/traerAdmin/:id',  AdminController.getAdmin);
+api.get('/traerAdmins/:page?', AdminController.getAdmins);
+api.post('/registrarAdmin', AdminController.saveAdmin);
+api.put('/modificarAdmin/:id', AdminController.updateAdmin);
+api.delete('/eliminarAdmin/:id', AdminController.deleteAdmin);
 
 
 module.exports = api;

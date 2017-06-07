@@ -8,23 +8,23 @@ var Persona = require('../models/persona');
 var Usuario = require('../models/usuario');
 var jwt = require('../services/jwt');
 
-function getMunicipal(req, res){
-	var municipalId = req.params.id;
+function getAdmin(req, res){
+	var adminId = req.params.id;
     
-	Persona.findById(municipalId, (err, municipal) =>{
-		var usuarioId = municipal.usuario;
+	Persona.findById(adminId, (err, admin) =>{
+		var usuarioId = admin.usuario;
 
 		Usuario.findById(usuarioId, (err, usuario) =>{
 			if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
-			if(usuario.rol != 'Municipal'){
-				res.status(404).send({message: 'El rol no es municipal'});
+			if(usuario.rol != 'Admin'){
+				res.status(404).send({message: 'El rol no es admin'});
 			}else{
-				if(!municipal){
-				res.status(404).send({message: 'El municipal no existe'});
+				if(!admin){
+				res.status(404).send({message: 'El admin no existe'});
 				}else{
-				res.status(200).send({municipal});
+				res.status(200).send({admin});
 					}	
 				}
 			}
@@ -32,39 +32,39 @@ function getMunicipal(req, res){
 	});
 }
 
-function getMunicipales(req, res){
+function getAdmins(req, res){
 	var usuarioId = req.params.Usuario;
 
 	if (!usuarioId) {
-		// sacar todos los municipales de la bd
+		// sacar todos los admins de la bd
 		var find = Persona.find({}).sort('apellido'); // sort es para ordenar
 	}else{
-		// sacar los municipales de un usuario concreto de la bd
+		// sacar los admins de un usuario concreto de la bd
 		var find = Persona.find({usuario: usuarioId}).sort('nombreUsuario');
 	}
 
-	find.populate({path: 'usuario'}).exec((err, municipales) =>{
+	find.populate({path: 'usuario'}).exec((err, admins) =>{
 		if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
-			if(!municipales){
-				res.status(404).send({message: 'No hay municipales'});
+			if(!admins){
+				res.status(404).send({message: 'No hay admins'});
 			}else{
-				res.status(200).send({municipales});
+				res.status(200).send({admins});
 			}
 		}
 	});
 }
 
-function saveMunicipal(req, res){
-	// Este metodo guarda un usuario primero y luego el conductor con el objeto de usuario
+function saveAdmin(req, res){
+	// Este metodo guarda un usuario primero y luego el admin con el objeto de usuario
 
 	var usuario = new Usuario();
 
 	var params = req.body;
 
 	usuario.nombreUsuario = params.nombreUsuario;
-	usuario.rol = "Municipal";
+	usuario.rol = "Admin";
 	usuario.email = params.email;
 
 	if(params.clave){
@@ -105,32 +105,32 @@ function saveMunicipal(req, res){
 	persona.usuario = usuario._id;
 
 
-	persona.save((err, municipalStored) => {
+	persona.save((err, adminStored) => {
 		if(err){
-			res.status(500).send({message:'Error al guardar el municipal'});
+			res.status(500).send({message:'Error al guardar el admin'});
 		}else{
-			if(!municipalStored){
-				res.status(404).send({message:'El municipal no ha sido guardado'});
+			if(!adminStored){
+				res.status(404).send({message:'El admin no ha sido guardado'});
 			}else{
-				res.status(200).send({persona: municipalStored});
+				res.status(200).send({persona: adminStored});
 			}
 		}
 	});
 }
 
-function updateMunicipal(req, res){
-	var municipalId = req.params.id;
+function updateAdmin(req, res){
+	var adminId = req.params.id;
 	var update = req.body;
 
-	Persona.findByIdAndUpdate(municipalId, update, (err, municipalUpdated) =>{
+	Persona.findByIdAndUpdate(adminId, update, (err, adminUpdated) =>{
 		if(err){
-			res.status(500).send({message:'Error al actualizar el municipal'});
+			res.status(500).send({message:'Error al actualizar el admin'});
 		}else{
-			if(!municipalUpdated)
+			if(!adminUpdated)
 			{
-				res.status(404).send({message:'El municipal no ha sido actualizado'});
+				res.status(404).send({message:'El admin no ha sido actualizado'});
 			}else{
-				res.status(200).send({persona: municipalUpdated});
+				res.status(200).send({persona: adminUpdated});
 			}
 		}
 	});
@@ -138,26 +138,26 @@ function updateMunicipal(req, res){
 
 // Ver bien si vamos a usar o no este metodo
 
-function deleteMunicipal(req, res){
-	var municipalId = req.params.id;
+function deleteAdmin(req, res){
+	var adminId = req.params.id;
 
-	Persona.findByIdAndRemove(municipalId, (err, municipalRemoved) =>{
+	Persona.findByIdAndRemove(adminId, (err, adminRemoved) =>{
 		if(err){
 			res.status(500).send({message: 'Error en el servidor'});
 		}else{
-			if(!municipalRemoved){
-				res.status(404).send({message: 'No se ha borrado el municipal'});
+			if(!adminRemoved){
+				res.status(404).send({message: 'No se ha borrado el admin'});
 			}else{
-				res.status(200).send({persona: municipalRemoved});
+				res.status(200).send({persona: adminRemoved});
 			}
 		}
 	});
 }
 
 module.exports = {
-	saveMunicipal,
-	updateMunicipal,
-	deleteMunicipal,
-	getMunicipal,
-	getMunicipales
+	saveAdmin,
+	updateAdmin,
+	deleteAdmin,
+	getAdmin,
+	getAdmins
 };
