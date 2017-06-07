@@ -5,6 +5,7 @@ var express = require('express');
 var ConductorController = require('../controllers/conductor');
 var OperadorController = require('../controllers/operadorDePlaya');
 var MunicipalController = require('../controllers/municipal');
+var InspectorController = require('../controllers/inspector');
 
 
 var api = express.Router();
@@ -33,6 +34,14 @@ api.get('/traerMunicipales/:page?', MunicipalController.getMunicipales);
 api.post('/registrarMunicipal', MunicipalController.saveMunicipal);
 api.put('/modificarMunicipal/:id', MunicipalController.updateMunicipal);
 api.delete('/eliminarMunicipal/:id', MunicipalController.deleteMunicipal);
+
+// Inspectores
+
+api.get('/traerInspector/:id',  InspectorController.getInspector);
+api.get('/traerInspectores/:page?', InspectorController.getInspectores);
+api.post('/registrarInspector', InspectorController.saveInspector);
+api.put('/modificarInspector/:id', InspectorController.updateInspector);
+api.delete('/eliminarInspector/:id', InspectorController.deleteInspector);
 
 
 
