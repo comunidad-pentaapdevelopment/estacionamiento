@@ -34,17 +34,17 @@ function getOperador(req, res){
 }
 
 function getOperadores(req, res){
-	var cuadraId = req.params.Cuadra;
+	var cuadraId = req.params.cuadra;
 
 	if (!cuadraId) {
 		// sacar todos los trapitos de la bd
-		var find = Persona.find({}).sort('Apellido'); // sort es para ordenar
+		var find = Persona.find({}).sort('apellido'); // sort es para ordenar
 	}else{
 		// sacar los trapitos de una calle concreta de la bd
-		var find = Persona.find({cuadra: cuadraId}).sort('Calle');
+		var find = Persona.find({cuadra: cuadraId}).sort('calle');
 	}
 
-	find.populate({path: 'Cuadra'}).exec((err, operadores) =>{
+	find.populate({path: 'cuadra'}).exec((err, operadores) =>{
 		if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
@@ -104,6 +104,7 @@ function saveOperador(req, res){
 	persona.dni = params.dni;
 	persona.telefono = params.telefono;
 	persona.usuario = usuario._id;
+	persona.cuadra = params.cuadra;
 	
 
 	persona.save((err, operadorStored) => {

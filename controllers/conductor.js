@@ -37,7 +37,7 @@ function getConductores(req, res){
 
 	if (!usuarioId) {
 		// sacar todos los conductores de la bd
-		var find = Persona.find({}).sort('Apellido'); // sort es para ordenar
+		var find = Persona.find({}).sort('apellido'); // sort es para ordenar
 	}else{
 		// sacar los conductores de un usuario concreto de la bd
 		var find = Persona.find({usuario: usuarioId}).sort('nombreUsuario');

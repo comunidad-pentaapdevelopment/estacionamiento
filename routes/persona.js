@@ -1,6 +1,7 @@
 'use strict'
 
 var express = require('express');
+
 var ConductorController = require('../controllers/conductor');
 var OperadorController = require('../controllers/operadorDePlaya');
 
@@ -22,5 +23,7 @@ api.get('/traerOperadores/:page?', OperadorController.getOperadores);
 api.post('/registrarOperador', OperadorController.saveOperador);
 api.put('/modificarOperador/:id', OperadorController.updateOperador);
 api.delete('/eliminarOperador/:id', OperadorController.deleteOperador);
+
+
 
 module.exports = api;
