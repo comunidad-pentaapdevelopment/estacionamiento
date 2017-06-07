@@ -16,39 +16,39 @@ var md_auth = require('../middlewares/authenticated');
 var multipart = require('connect-multiparty');
 
 // Conductores
-api.get('/traerConductor/:id',  ConductorController.getConductor);
-api.get('/traerConductores/:page?', ConductorController.getConductores);
-api.post('/registrarConductor', ConductorController.saveConductor);
-api.put('/modificarConductor/:id', ConductorController.updateConductor);
-//api.delete('/eliminarConductor/:id', ConductorController.deleteConductor);
+api.get('/traerConductor/:id', md_auth.ensureAuth, ConductorController.getConductor);
+api.get('/traerConductores/:page?', md_auth.ensureAuth, ConductorController.getConductores);
+api.post('/registrarConductor', md_auth.ensureAuth, ConductorController.saveConductor);
+api.put('/modificarConductor/:id', md_auth.ensureAuth, ConductorController.updateConductor);
+//api.delete('/eliminarConductor/:id', md_auth.ensureAuth, ConductorController.deleteConductor);
 
 // Operadores de Playa
-api.get('/traerOperador/:id',  OperadorController.getOperador);
-api.get('/traerOperadores/:page?', OperadorController.getOperadores);
-api.post('/registrarOperador', OperadorController.saveOperador);
-api.put('/modificarOperador/:id', OperadorController.updateOperador);
-api.delete('/eliminarOperador/:id', OperadorController.deleteOperador);
+api.get('/traerOperador/:id', md_auth.ensureAuth, OperadorController.getOperador);
+api.get('/traerOperadores/:page?', md_auth.ensureAuth, OperadorController.getOperadores);
+api.post('/registrarOperador', md_auth.ensureAuth, OperadorController.saveOperador);
+api.put('/modificarOperador/:id', md_auth.ensureAuth, OperadorController.updateOperador);
+api.delete('/eliminarOperador/:id', md_auth.ensureAuth, OperadorController.deleteOperador);
 
 // Municipales
-api.get('/traerMunicipal/:id',  MunicipalController.getMunicipal);
-api.get('/traerMunicipales/:page?', MunicipalController.getMunicipales);
-api.post('/registrarMunicipal', MunicipalController.saveMunicipal);
-api.put('/modificarMunicipal/:id', MunicipalController.updateMunicipal);
-api.delete('/eliminarMunicipal/:id', MunicipalController.deleteMunicipal);
+api.get('/traerMunicipal/:id', md_auth.ensureAuth, MunicipalController.getMunicipal);
+api.get('/traerMunicipales/:page?', md_auth.ensureAuth, MunicipalController.getMunicipales);
+api.post('/registrarMunicipal', md_auth.ensureAuth, MunicipalController.saveMunicipal);
+api.put('/modificarMunicipal/:id', md_auth.ensureAuth, MunicipalController.updateMunicipal);
+api.delete('/eliminarMunicipal/:id', md_auth.ensureAuth, MunicipalController.deleteMunicipal);
 
 // Admins
-api.get('/traerAdmin/:id',  AdminController.getAdmin);
-api.get('/traerAdmins/:page?', AdminController.getAdmins);
-api.post('/registrarAdmin', AdminController.saveAdmin);
-api.put('/modificarAdmin/:id', AdminController.updateAdmin);
-api.delete('/eliminarAdmin/:id', AdminController.deleteAdmin);
+api.get('/traerAdmin/:id', md_auth.ensureAuth, AdminController.getAdmin);
+api.get('/traerAdmins/:page?', md_auth.ensureAuth, AdminController.getAdmins);
+api.post('/registrarAdmin', md_auth.ensureAuth, AdminController.saveAdmin);
+api.put('/modificarAdmin/:id', md_auth.ensureAuth, AdminController.updateAdmin);
+api.delete('/eliminarAdmin/:id', md_auth.ensureAuth, AdminController.deleteAdmin);
 
 // Inspectores
 
-api.get('/traerInspector/:id',  InspectorController.getInspector);
-api.get('/traerInspectores/:page?', InspectorController.getInspectores);
-api.post('/registrarInspector', InspectorController.saveInspector);
-api.put('/modificarInspector/:id', InspectorController.updateInspector);
-api.delete('/eliminarInspector/:id', InspectorController.deleteInspector);
+api.get('/traerInspector/:id', md_auth.ensureAuth, InspectorController.getInspector);
+api.get('/traerInspectores/:page?', md_auth.ensureAuth, InspectorController.getInspectores);
+api.post('/registrarInspector', md_auth.ensureAuth, InspectorController.saveInspector);
+api.put('/modificarInspector/:id', md_auth.ensureAuth, InspectorController.updateInspector);
+api.delete('/eliminarInspector/:id', md_auth.ensureAuth, InspectorController.deleteInspector);
 
 module.exports = api;
