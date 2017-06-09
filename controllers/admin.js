@@ -8,23 +8,23 @@ var Persona = require('../models/persona');
 var Usuario = require('../models/usuario');
 var jwt = require('../services/jwt');
 
-function getConductor(req, res){
-	var conductorId = req.params.id;
+function getAdmin(req, res){
+	var adminId = req.params.id;
     
-	Persona.findById(conductorId, (err, conductor) =>{
-		var usuarioId = conductor.usuario;
+	Persona.findById(adminId, (err, admin) =>{
+		var usuarioId = admin.usuario;
 
 		Usuario.findById(usuarioId, (err, usuario) =>{
 			if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
-			if(usuario.rol != 'Conductor'){
-				res.status(404).send({message: 'El rol no es conductor'});
+			if(usuario.rol != 'Admin'){
+				res.status(404).send({message: 'El rol no es admin'});
 			}else{
-				if(!conductor){
-				res.status(404).send({message: 'El conductor no existe'});
+				if(!admin){
+				res.status(404).send({message: 'El admin no existe'});
 				}else{
-				res.status(200).send({conductor});
+				res.status(200).send({admin});
 					}	
 				}
 			}
@@ -32,39 +32,39 @@ function getConductor(req, res){
 	});
 }
 
-function getConductores(req, res){
+function getAdmins(req, res){
 	var usuarioId = req.params.Usuario;
 
 	if (!usuarioId) {
-		// sacar todos los conductores de la bd
+		// sacar todos los admins de la bd
 		var find = Persona.find({}).sort('apellido'); // sort es para ordenar
 	}else{
-		// sacar los conductores de un usuario concreto de la bd
+		// sacar los admins de un usuario concreto de la bd
 		var find = Persona.find({usuario: usuarioId}).sort('nombreUsuario');
 	}
 
-	find.populate({path: 'usuario'}).exec((err, conductores) =>{
+	find.populate({path: 'usuario'}).exec((err, admins) =>{
 		if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
-			if(!conductores){
-				res.status(404).send({message: 'No hay conductores'});
+			if(!admins){
+				res.status(404).send({message: 'No hay admins'});
 			}else{
-				res.status(200).send({conductores});
+				res.status(200).send({admins});
 			}
 		}
 	});
 }
 
-function saveConductor(req, res){
-	// Este metodo guarda un usuario primero y luego el conductor con el objeto de usuario
+function saveAdmin(req, res){
+	// Este metodo guarda un usuario primero y luego el admin con el objeto de usuario
 
 	var usuario = new Usuario();
 
 	var params = req.body;
 
 	usuario.nombreUsuario = params.nombreUsuario;
-	usuario.rol = "Conductor";
+	usuario.rol = "Admin";
 	usuario.email = params.email;
 
 	if(params.clave){
@@ -101,37 +101,36 @@ function saveConductor(req, res){
 	persona.nombre = params.nombre;
 	persona.apellido = params.apellido;
 	persona.dni = params.dni;
-	persona.saldo = 0;
 	persona.telefono = params.telefono;
 	persona.usuario = usuario._id;
 
 
-	persona.save((err, conductorStored) => {
+	persona.save((err, adminStored) => {
 		if(err){
-			res.status(500).send({message:'Error al guardar el conductor'});
+			res.status(500).send({message:'Error al guardar el admin'});
 		}else{
-			if(!conductorStored){
-				res.status(404).send({message:'El conductor no ha sido guardado'});
+			if(!adminStored){
+				res.status(404).send({message:'El admin no ha sido guardado'});
 			}else{
-				res.status(200).send({persona: conductorStored});
+				res.status(200).send({persona: adminStored});
 			}
 		}
 	});
 }
 
-function updateConductor(req, res){
-	var conductorId = req.params.id;
+function updateAdmin(req, res){
+	var adminId = req.params.id;
 	var update = req.body;
 
-	Persona.findByIdAndUpdate(conductorId, update, (err, conductorUpdated) =>{
+	Persona.findByIdAndUpdate(adminId, update, (err, adminUpdated) =>{
 		if(err){
-			res.status(500).send({message:'Error al actualizar el conductor'});
+			res.status(500).send({message:'Error al actualizar el admin'});
 		}else{
-			if(!conductorUpdated)
+			if(!adminUpdated)
 			{
-				res.status(404).send({message:'El conductor no ha sido actualizado'});
+				res.status(404).send({message:'El admin no ha sido actualizado'});
 			}else{
-				res.status(200).send({persona: conductorUpdated});
+				res.status(200).send({persona: adminUpdated});
 			}
 		}
 	});
@@ -139,26 +138,26 @@ function updateConductor(req, res){
 
 // Ver bien si vamos a usar o no este metodo
 
-/*function deleteConductor(req, res){
-	var conductorId = req.params.id;
+function deleteAdmin(req, res){
+	var adminId = req.params.id;
 
-	Persona.findByIdAndRemove(conductorId, (err, conductorRemoved) =>{
+	Persona.findByIdAndRemove(adminId, (err, adminRemoved) =>{
 		if(err){
 			res.status(500).send({message: 'Error en el servidor'});
 		}else{
-			if(!conductorRemoved){
-				res.status(404).send({message: 'No se ha borrado el conductor'});
+			if(!adminRemoved){
+				res.status(404).send({message: 'No se ha borrado el admin'});
 			}else{
-				res.status(200).send({persona: conductorRemoved});
+				res.status(200).send({persona: adminRemoved});
 			}
 		}
 	});
-}*/
+}
 
 module.exports = {
-	saveConductor,
-	updateConductor,
-	//deleteConductor,
-	getConductor,
-	getConductores
+	saveAdmin,
+	updateAdmin,
+	deleteAdmin,
+	getAdmin,
+	getAdmins
 };

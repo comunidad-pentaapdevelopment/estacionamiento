@@ -9,10 +9,10 @@ var md_auth = require('../middlewares/authenticated');
 var multipart = require('connect-multiparty');
 
 // Cuadras
-api.get('/traerCuadra/:id',  CuadraController.getCuadra);
-api.get('/traerCuadras/:page?', CuadraController.getCuadras);
-api.post('/registrarCuadra', CuadraController.saveCuadra);
-api.put('/modificarCuadra/:id', CuadraController.updateCuadra);
-api.delete('/eliminarCuadra/:id', CuadraController.deleteCuadra);
+api.get('/traerCuadra/:id', md_auth.ensureAuth, CuadraController.getCuadra);
+api.get('/traerCuadras/:page?', md_auth.ensureAuth, CuadraController.getCuadras);
+api.post('/registrarCuadra', md_auth.ensureAuth, CuadraController.saveCuadra);
+api.put('/modificarCuadra/:id', md_auth.ensureAuth, CuadraController.updateCuadra);
+api.delete('/eliminarCuadra/:id', md_auth.ensureAuth, CuadraController.deleteCuadra);
 
 module.exports = api;

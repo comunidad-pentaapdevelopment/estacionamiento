@@ -4,9 +4,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CuadraSchema = Schema({
-		Calle: String,
-		AlturaDesde: Number,
-		AlturaHasta: Number
+		calle: String,
+		alturaDesde: Number,
+		alturaHasta: Number,
+		zona: String
 });
 
 module.exports = mongoose.model('Cuadra', CuadraSchema);

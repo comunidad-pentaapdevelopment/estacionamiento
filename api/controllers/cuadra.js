@@ -52,9 +52,10 @@ function saveCuadra(req, res){
 
 	var params = req.body;
 
-	cuadra.Calle = params.Calle;
-	cuadra.AlturaDesde = params.AlturaDesde;
-	cuadra.AlturaHasta = params.AlturaHasta;
+	cuadra.calle = params.calle;
+	cuadra.alturaDesde = params.alturaDesde;
+	cuadra.alturaHasta = params.alturaHasta;
+	cuadra.zona = params.zona;
 
 	cuadra.save((err, cuadraStored) =>{
 		if(err){

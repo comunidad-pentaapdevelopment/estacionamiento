@@ -8,23 +8,23 @@ var Persona = require('../models/persona');
 var Usuario = require('../models/usuario');
 var jwt = require('../services/jwt');
 
-function getConductor(req, res){
-	var conductorId = req.params.id;
+function getMunicipal(req, res){
+	var municipalId = req.params.id;
     
-	Persona.findById(conductorId, (err, conductor) =>{
-		var usuarioId = conductor.usuario;
+	Persona.findById(municipalId, (err, municipal) =>{
+		var usuarioId = municipal.usuario;
 
 		Usuario.findById(usuarioId, (err, usuario) =>{
 			if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
-			if(usuario.rol != 'Conductor'){
-				res.status(404).send({message: 'El rol no es conductor'});
+			if(usuario.rol != 'Municipal'){
+				res.status(404).send({message: 'El rol no es municipal'});
 			}else{
-				if(!conductor){
-				res.status(404).send({message: 'El conductor no existe'});
+				if(!municipal){
+				res.status(404).send({message: 'El municipal no existe'});
 				}else{
-				res.status(200).send({conductor});
+				res.status(200).send({municipal});
 					}	
 				}
 			}
@@ -32,31 +32,31 @@ function getConductor(req, res){
 	});
 }
 
-function getConductores(req, res){
+function getMunicipales(req, res){
 	var usuarioId = req.params.Usuario;
 
 	if (!usuarioId) {
-		// sacar todos los conductores de la bd
+		// sacar todos los municipales de la bd
 		var find = Persona.find({}).sort('apellido'); // sort es para ordenar
 	}else{
-		// sacar los conductores de un usuario concreto de la bd
+		// sacar los municipales de un usuario concreto de la bd
 		var find = Persona.find({usuario: usuarioId}).sort('nombreUsuario');
 	}
 
-	find.populate({path: 'usuario'}).exec((err, conductores) =>{
+	find.populate({path: 'usuario'}).exec((err, municipales) =>{
 		if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
-			if(!conductores){
-				res.status(404).send({message: 'No hay conductores'});
+			if(!municipales){
+				res.status(404).send({message: 'No hay municipales'});
 			}else{
-				res.status(200).send({conductores});
+				res.status(200).send({municipales});
 			}
 		}
 	});
 }
 
-function saveConductor(req, res){
+function saveMunicipal(req, res){
 	// Este metodo guarda un usuario primero y luego el conductor con el objeto de usuario
 
 	var usuario = new Usuario();
@@ -64,7 +64,7 @@ function saveConductor(req, res){
 	var params = req.body;
 
 	usuario.nombreUsuario = params.nombreUsuario;
-	usuario.rol = "Conductor";
+	usuario.rol = "Municipal";
 	usuario.email = params.email;
 
 	if(params.clave){
@@ -101,37 +101,36 @@ function saveConductor(req, res){
 	persona.nombre = params.nombre;
 	persona.apellido = params.apellido;
 	persona.dni = params.dni;
-	persona.saldo = 0;
 	persona.telefono = params.telefono;
 	persona.usuario = usuario._id;
 
 
-	persona.save((err, conductorStored) => {
+	persona.save((err, municipalStored) => {
 		if(err){
-			res.status(500).send({message:'Error al guardar el conductor'});
+			res.status(500).send({message:'Error al guardar el municipal'});
 		}else{
-			if(!conductorStored){
-				res.status(404).send({message:'El conductor no ha sido guardado'});
+			if(!municipalStored){
+				res.status(404).send({message:'El municipal no ha sido guardado'});
 			}else{
-				res.status(200).send({persona: conductorStored});
+				res.status(200).send({persona: municipalStored});
 			}
 		}
 	});
 }
 
-function updateConductor(req, res){
-	var conductorId = req.params.id;
+function updateMunicipal(req, res){
+	var municipalId = req.params.id;
 	var update = req.body;
 
-	Persona.findByIdAndUpdate(conductorId, update, (err, conductorUpdated) =>{
+	Persona.findByIdAndUpdate(municipalId, update, (err, municipalUpdated) =>{
 		if(err){
-			res.status(500).send({message:'Error al actualizar el conductor'});
+			res.status(500).send({message:'Error al actualizar el municipal'});
 		}else{
-			if(!conductorUpdated)
+			if(!municipalUpdated)
 			{
-				res.status(404).send({message:'El conductor no ha sido actualizado'});
+				res.status(404).send({message:'El municipal no ha sido actualizado'});
 			}else{
-				res.status(200).send({persona: conductorUpdated});
+				res.status(200).send({persona: municipalUpdated});
 			}
 		}
 	});
@@ -139,26 +138,26 @@ function updateConductor(req, res){
 
 // Ver bien si vamos a usar o no este metodo
 
-/*function deleteConductor(req, res){
-	var conductorId = req.params.id;
+function deleteMunicipal(req, res){
+	var municipalId = req.params.id;
 
-	Persona.findByIdAndRemove(conductorId, (err, conductorRemoved) =>{
+	Persona.findByIdAndRemove(municipalId, (err, municipalRemoved) =>{
 		if(err){
 			res.status(500).send({message: 'Error en el servidor'});
 		}else{
-			if(!conductorRemoved){
-				res.status(404).send({message: 'No se ha borrado el conductor'});
+			if(!municipalRemoved){
+				res.status(404).send({message: 'No se ha borrado el municipal'});
 			}else{
-				res.status(200).send({persona: conductorRemoved});
+				res.status(200).send({persona: municipalRemoved});
 			}
 		}
 	});
-}*/
+}
 
 module.exports = {
-	saveConductor,
-	updateConductor,
-	//deleteConductor,
-	getConductor,
-	getConductores
+	saveMunicipal,
+	updateMunicipal,
+	deleteMunicipal,
+	getMunicipal,
+	getMunicipales
 };

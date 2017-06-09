@@ -10,10 +10,7 @@ var PersonaSchema = Schema({
 		saldo: Number,
 		telefono: Number,
 		usuario: {type: Schema.ObjectId, ref:'Usuario'},
-		Cuadra: {type: Schema.ObjectId, ref:'Cuadra'},
-		RazonSocial: String,
-		NombreFantasia: String,
-		Cuit: Number
+		cuadra: {type: Schema.ObjectId, ref:'Cuadra'}
 });
 
 module.exports = mongoose.model('Persona', PersonaSchema);

@@ -8,23 +8,23 @@ var Persona = require('../models/persona');
 var Usuario = require('../models/usuario');
 var jwt = require('../services/jwt');
 
-function getConductor(req, res){
-	var conductorId = req.params.id;
+function getInspector(req, res){
+	var inspectorId = req.params.id;
     
-	Persona.findById(conductorId, (err, conductor) =>{
-		var usuarioId = conductor.usuario;
+	Persona.findById(inspectorId, (err, inspector) =>{
+		var usuarioId = inspector.usuario;
 
 		Usuario.findById(usuarioId, (err, usuario) =>{
 			if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
-			if(usuario.rol != 'Conductor'){
-				res.status(404).send({message: 'El rol no es conductor'});
+			if(usuario.rol != 'Inspector'){
+				res.status(404).send({message: 'El rol no es Inspector'});
 			}else{
-				if(!conductor){
-				res.status(404).send({message: 'El conductor no existe'});
+				if(!inspector){
+				res.status(404).send({message: 'El Inspector no existe'});
 				}else{
-				res.status(200).send({conductor});
+				res.status(200).send({inspector});
 					}	
 				}
 			}
@@ -32,7 +32,7 @@ function getConductor(req, res){
 	});
 }
 
-function getConductores(req, res){
+function getInspectores(req, res){
 	var usuarioId = req.params.Usuario;
 
 	if (!usuarioId) {
@@ -43,20 +43,20 @@ function getConductores(req, res){
 		var find = Persona.find({usuario: usuarioId}).sort('nombreUsuario');
 	}
 
-	find.populate({path: 'usuario'}).exec((err, conductores) =>{
+	find.populate({path: 'usuario'}).exec((err, inspectores) =>{
 		if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
-			if(!conductores){
-				res.status(404).send({message: 'No hay conductores'});
+			if(!inspectores){
+				res.status(404).send({message: 'No hay inspectores'});
 			}else{
-				res.status(200).send({conductores});
+				res.status(200).send({inspectores});
 			}
 		}
 	});
 }
 
-function saveConductor(req, res){
+function saveInspector(req, res){
 	// Este metodo guarda un usuario primero y luego el conductor con el objeto de usuario
 
 	var usuario = new Usuario();
@@ -64,7 +64,7 @@ function saveConductor(req, res){
 	var params = req.body;
 
 	usuario.nombreUsuario = params.nombreUsuario;
-	usuario.rol = "Conductor";
+	usuario.rol = "Inspector";
 	usuario.email = params.email;
 
 	if(params.clave){
@@ -101,37 +101,36 @@ function saveConductor(req, res){
 	persona.nombre = params.nombre;
 	persona.apellido = params.apellido;
 	persona.dni = params.dni;
-	persona.saldo = 0;
 	persona.telefono = params.telefono;
 	persona.usuario = usuario._id;
 
 
-	persona.save((err, conductorStored) => {
+	persona.save((err, inspectorStored) => {
 		if(err){
-			res.status(500).send({message:'Error al guardar el conductor'});
+			res.status(500).send({message:'Error al guardar el inspector'});
 		}else{
-			if(!conductorStored){
-				res.status(404).send({message:'El conductor no ha sido guardado'});
+			if(!inspectorStored){
+				res.status(404).send({message:'El inspector no ha sido guardado'});
 			}else{
-				res.status(200).send({persona: conductorStored});
+				res.status(200).send({persona: inspectorStored});
 			}
 		}
 	});
 }
 
-function updateConductor(req, res){
-	var conductorId = req.params.id;
+function updateInspector(req, res){
+	var inspectorId = req.params.id;
 	var update = req.body;
 
-	Persona.findByIdAndUpdate(conductorId, update, (err, conductorUpdated) =>{
+	Persona.findByIdAndUpdate(inspectorId, update, (err, inspectorUpdated) =>{
 		if(err){
-			res.status(500).send({message:'Error al actualizar el conductor'});
+			res.status(500).send({message:'Error al actualizar el inspector'});
 		}else{
-			if(!conductorUpdated)
+			if(!inspectorUpdated)
 			{
-				res.status(404).send({message:'El conductor no ha sido actualizado'});
+				res.status(404).send({message:'El inspector no ha sido actualizado'});
 			}else{
-				res.status(200).send({persona: conductorUpdated});
+				res.status(200).send({persona: inspectorUpdated});
 			}
 		}
 	});
@@ -139,26 +138,26 @@ function updateConductor(req, res){
 
 // Ver bien si vamos a usar o no este metodo
 
-/*function deleteConductor(req, res){
-	var conductorId = req.params.id;
+function deleteInspector(req, res){
+	var inspectorId = req.params.id;
 
-	Persona.findByIdAndRemove(conductorId, (err, conductorRemoved) =>{
+	Persona.findByIdAndRemove(inspectorId, (err, inspectorRemoved) =>{
 		if(err){
 			res.status(500).send({message: 'Error en el servidor'});
 		}else{
-			if(!conductorRemoved){
-				res.status(404).send({message: 'No se ha borrado el conductor'});
+			if(!municipalRemoved){
+				res.status(404).send({message: 'No se ha borrado el inspector'});
 			}else{
-				res.status(200).send({persona: conductorRemoved});
+				res.status(200).send({persona: inspectorRemoved});
 			}
 		}
 	});
-}*/
+}
 
 module.exports = {
-	saveConductor,
-	updateConductor,
-	//deleteConductor,
-	getConductor,
-	getConductores
+	saveInspector,
+	updateInspector,
+	deleteInspector,
+	getInspector,
+	getInspectores
 };
