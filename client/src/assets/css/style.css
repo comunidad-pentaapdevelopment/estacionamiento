@@ -1,0 +1,15 @@
+.titulo {
+	color: white;
+	vertical-align: middle;
+}
+.usuarioStatic {
+	color: white;
+	vertical-align: middle;
+}
+body {
+  background-image: url(http://picview.info/download/20141219/yellow-and-black-stripes-splash-abstract-painting-1600x900.jpg);
+  text-align: center;
+}
+h4 {
+	color: white;
+}
