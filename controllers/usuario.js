@@ -3,7 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 var bcrypt = require('bcrypt-nodejs');
-var Usuario = require('../models/usuario');
+var Persona = require('../models/persona');
 var jwt = require('../services/jwt');
 
 
@@ -14,7 +14,7 @@ function loginUsuario(req, res){
 	var email = params.email;
 	var password = params.clave;
 
-	Usuario.findOne({email: email.toLowerCase()}, (err,usuario) => {
+	Persona.findOne({email: email}, (err,usuario) => {
 		if(err){
 			res.status(500).send({message:'Error en la petición'});
 		}else{
@@ -52,14 +52,14 @@ function updateUsuario(req,res){  // metodo para actualizar un usuario
 	  return res.status(500).send({message:'No tienes permiso para actualizar este usuario'});
 	}
 
-	Usuario.findByIdAndUpdate(usuarioId, update, (err,usuarioUpdated) => {
+	Persona.findByIdAndUpdate(usuarioId, update, (err,usuarioUpdated) => {
 		if(err){
 			res.status(500).send({message:'Error al actualizar el usuario'});
 		}else{
 			if(!usuarioUpdated){
 				res.status(404).send({message:'No se ha podido actualizar el usuario'});
 			}else{
-				res.status(200).send({usuario: usuarioUpdated});
+				res.status(200).send({persona: usuarioUpdated});
 			}
 		}
 	});

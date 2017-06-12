@@ -7,6 +7,8 @@ var OperadorController = require('../controllers/operadorDePlaya');
 var MunicipalController = require('../controllers/municipal');
 var AdminController = require('../controllers/admin');
 var InspectorController = require('../controllers/inspector');
+var UsuarioController = require('../controllers/usuario');
+var PuntoVentaController = require('../controllers/puntoVenta');
 
 
 
@@ -15,12 +17,16 @@ var md_auth = require('../middlewares/authenticated');
 
 var multipart = require('connect-multiparty');
 
+//Login
+api.post('/login', UsuarioController.loginUsuario);
+api.put('/update-user/:id', md_auth.ensureAuth, UsuarioController.updateUsuario);
+
 // Conductores
 api.get('/traerConductor/:id', md_auth.ensureAuth, ConductorController.getConductor);
-api.get('/traerConductores/:page?', md_auth.ensureAuth, ConductorController.getConductores);
+api.get('/traerConductores/:page?',md_auth.ensureAuth, ConductorController.getConductores);
 api.post('/registrarConductor', md_auth.ensureAuth, ConductorController.saveConductor);
 api.put('/modificarConductor/:id', md_auth.ensureAuth, ConductorController.updateConductor);
-//api.delete('/eliminarConductor/:id', md_auth.ensureAuth, ConductorController.deleteConductor);
+api.delete('/eliminarConductor/:id', md_auth.ensureAuth, ConductorController.deleteConductor);
 
 // Operadores de Playa
 api.get('/traerOperador/:id', md_auth.ensureAuth, OperadorController.getOperador);
@@ -50,5 +56,13 @@ api.get('/traerInspectores/:page?', md_auth.ensureAuth, InspectorController.getI
 api.post('/registrarInspector', md_auth.ensureAuth, InspectorController.saveInspector);
 api.put('/modificarInspector/:id', md_auth.ensureAuth, InspectorController.updateInspector);
 api.delete('/eliminarInspector/:id', md_auth.ensureAuth, InspectorController.deleteInspector);
+
+// Puntos de Ventas
+
+api.get('/traerPuntoVenta/:id', md_auth.ensureAuth, PuntoVentaController.getPuntoVenta);
+api.get('/traerPuntosVenta/:page?', md_auth.ensureAuth, PuntoVentaController.getPuntosVenta);
+api.post('/registrarPuntoVenta', md_auth.ensureAuth, PuntoVentaController.savePuntoVenta);
+api.put('/modificarPuntoVenta/:id', md_auth.ensureAuth, PuntoVentaController.updatePuntoVenta);
+api.delete('/eliminarPuntoVenta/:id', md_auth.ensureAuth, PuntoVentaController.deletePuntoVenta);
 
 module.exports = api;

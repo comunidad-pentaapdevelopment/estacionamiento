@@ -4,85 +4,86 @@ var fs = require('fs');
 var path = require('path');
 var bcrypt = require('bcrypt-nodejs');
 var mongoosePaginate = require ('mongoose-Pagination');
-var PuntoVenta = require('../models/puntoVenta');
-var Usuario = require('../models/usuario');
+var Persona = require('../models/persona');
 var jwt = require('../services/jwt');
 
 function getPuntoVenta(req, res){
 	var puntoVentaId = req.params.id;
-    
-	PuntoVenta.findById(puntoVentaId, (err, puntoVenta) =>{
-		var usuarioId = puntoVenta.usuario;
 
-		Usuario.findById(usuarioId, (err, usuario) =>{
-			if(err){
+	Persona.findById(puntoVentaId, (err, puntoVenta) =>{
+		if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
-			if(usuario.rol != 'PuntoVenta'){
+			if(!puntoVenta){
+				res.status(404).send({message: 'El punto de Venta no existe'});
+			}else{
+				if(puntoVenta.rol.descripcion != "PuntoVenta"){
 				res.status(404).send({message: 'El rol no es punto de Venta'});
 			}else{
-				if(!puntoVenta){
-				res.status(404).send({message: 'El punto de Venta no existe'});
-				}else{
-				res.status(200).send({puntoVenta});
-					}	
+					res.status(200).send({puntoVenta});
 				}
 			}
-		});	
+		}
 	});
 }
 
 function getPuntosVenta(req, res){
-	var usuarioId = req.params.Usuario;
-
-	if (!usuarioId) {
-		// sacar todos los conductores de la bd
-		var find = PuntoVenta.find({}).sort('razonSocial'); // sort es para ordenar
+	if(req.params.page){
+		var page = req.params.page;
 	}else{
-		// sacar los conductores de un usuario concreto de la bd
-		var find = PuntoVenta.find({usuario: usuarioId}).sort('nombreUsuario');
+		var page = 1;
 	}
+	var itemsPerPage = 4;
 
-	find.populate({path: 'usuario'}).exec((err, puntosVenta) =>{
+
+	Persona.find({'rol.descripcion': 'PuntoVenta'}).sort('rol.nombreFantasia').paginate(page, itemsPerPage, function(err,puntoVentas,total){
+
 		if(err){
-			res.status(500).send({message: 'Error en la petición'});
+			res.status(500).send({message:'Error en la petición'});
 		}else{
-			if(!puntosVenta){
-				res.status(404).send({message: 'No hay puntos de venta'});
+			if(!puntoVentas){
+				res.status(404).send({message:'No hay punto de ventas!!'});
 			}else{
-				res.status(200).send({puntosVenta});
+				return res.status(200).send({
+					total_items: total,
+					puntoVentas: puntoVentas
+				});
 			}
 		}
 	});
 }
 
 function savePuntoVenta(req, res){
-	// Este metodo guarda un usuario primero y luego el punto de venta con el objeto de usuario
-
-	var usuario = new Usuario();
+	var persona = new Persona();
 
 	var params = req.body;
 
-	usuario.nombreUsuario = params.nombreUsuario;
-	usuario.rol = "PuntoVenta";
-	usuario.email = params.email;
+	var rol = persona.rol;
+
+	persona.nombreUsuario = params.nombreUsuario;
+	persona.email = params.email;
+	rol.descripcion = "PuntoVenta";
+	rol.razonSocial = params.razonSocial;
+	rol.nombreFantasia = params.nombreFantasia;
+	rol.cuit = params.cuit;
+	rol.saldo = 0;
 
 	if(params.clave){
 		// Encriptar contraseña y guardar datos
 		bcrypt.hash(params.clave,null,null,function(err,hash){
-			usuario.clave = hash;
+			persona.clave = hash;
 
-			if(usuario.nombreUsuario != null  && usuario.email != null){
-				// Guarda el usuario
-				usuario.save((err,usuarioStored) => {
+			if(persona.nombreUsuario != null  && persona.email != null){
+				// Guarda el punto de venta
+				persona.save((err,personaStored) => {
 					if(err){
-						res.status(500).send({message: 'Error al guardar el usuario'});
+						res.status(500).send({message: 'Error al guardar el punto de venta'});
 					}else{
-						if(!usuarioStored){
-							res.status(404).send({message: 'No se ha registrado el usuario'});
+						if(!personaStored){
+							res.status(404).send({message: 'No se ha registrado el punto de venta'});
 						}else
 						  {
-							res.status(200).send({usuario: usuarioStored});
+							res.status(200).send({persona: personaStored});
 						  }
 					}
 				});
@@ -95,28 +96,6 @@ function savePuntoVenta(req, res){
 	}else{
 		res.status(500).send({message: 'Introduce la contraseña'});
 	}
-
-	var puntoVenta = new PuntoVenta();
-
-	puntoVenta.razonSocial = params.razonSocial;
-	puntoVenta.nombreFantasia = params.nombreFantasia;
-	puntoVenta.cuit = params.cuit;
-	puntoVenta.saldo = 0;
-	puntoVenta.telefono = params.telefono;
-	puntoVenta.usuario = usuario._id;
-
-
-	puntoVenta.save((err, puntoVentaStored) => {
-		if(err){
-			res.status(500).send({message:'Error al guardar el punto de venta'});
-		}else{
-			if(!puntoVentaStored){
-				res.status(404).send({message:'El punto de venta no ha sido guardado'});
-			}else{
-				res.status(200).send({puntoVenta: puntoVentaStored});
-			}
-		}
-	});
 }
 
 function updatePuntoVenta(req, res){

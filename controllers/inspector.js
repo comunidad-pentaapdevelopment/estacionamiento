@@ -5,84 +5,83 @@ var path = require('path');
 var bcrypt = require('bcrypt-nodejs');
 var mongoosePaginate = require ('mongoose-Pagination');
 var Persona = require('../models/persona');
-var Usuario = require('../models/usuario');
 var jwt = require('../services/jwt');
 
 function getInspector(req, res){
 	var inspectorId = req.params.id;
-    
-	Persona.findById(inspectorId, (err, inspector) =>{
-		var usuarioId = inspector.usuario;
 
-		Usuario.findById(usuarioId, (err, usuario) =>{
-			if(err){
+	Persona.findById(inspectorId, (err, inspector) =>{
+		if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
-			if(usuario.rol != 'Inspector'){
-				res.status(404).send({message: 'El rol no es Inspector'});
+			if(!inspector){
+				res.status(404).send({message: 'El inspector no existe'});
 			}else{
-				if(!inspector){
-				res.status(404).send({message: 'El Inspector no existe'});
-				}else{
-				res.status(200).send({inspector});
-					}	
+				if(inspector.rol.descripcion != "Inspector"){
+				res.status(404).send({message: 'El rol no es inspector'});
+			}else{
+					res.status(200).send({inspector});
 				}
 			}
-		});	
+		}
 	});
 }
 
 function getInspectores(req, res){
-	var usuarioId = req.params.Usuario;
-
-	if (!usuarioId) {
-		// sacar todos los conductores de la bd
-		var find = Persona.find({}).sort('apellido'); // sort es para ordenar
+	if(req.params.page){
+		var page = req.params.page;
 	}else{
-		// sacar los conductores de un usuario concreto de la bd
-		var find = Persona.find({usuario: usuarioId}).sort('nombreUsuario');
+		var page = 1;
 	}
+	var itemsPerPage = 4;
 
-	find.populate({path: 'usuario'}).exec((err, inspectores) =>{
+
+	Persona.find({'rol.descripcion': 'Inspector'}).sort('rol.apellido').paginate(page, itemsPerPage, function(err,inspectores,total){
 		if(err){
-			res.status(500).send({message: 'Error en la petición'});
+			res.status(500).send({message:'Error en la petición'});
 		}else{
 			if(!inspectores){
-				res.status(404).send({message: 'No hay inspectores'});
+				res.status(404).send({message:'No hay inspectores!!'});
 			}else{
-				res.status(200).send({inspectores});
+				return res.status(200).send({
+					total_items: total,
+					inspectores: inspectores
+				});
 			}
 		}
 	});
 }
 
 function saveInspector(req, res){
-	// Este metodo guarda un usuario primero y luego el conductor con el objeto de usuario
-
-	var usuario = new Usuario();
+	var persona = new Persona();
 
 	var params = req.body;
 
-	usuario.nombreUsuario = params.nombreUsuario;
-	usuario.rol = "Inspector";
-	usuario.email = params.email;
+	var rol = persona.rol;
+
+	persona.nombreUsuario = params.nombreUsuario;
+	persona.email = params.email;
+	rol.descripcion = "Inspector";
+	rol.nombre = params.nombre;
+	rol.apellido = params.apellido;
+	rol.dni = params.dni;
 
 	if(params.clave){
 		// Encriptar contraseña y guardar datos
 		bcrypt.hash(params.clave,null,null,function(err,hash){
-			usuario.clave = hash;
+			persona.clave = hash;
 
-			if(usuario.nombreUsuario != null  && usuario.email != null){
-				// Guarda el usuario
-				usuario.save((err,usuarioStored) => {
+			if(persona.nombreUsuario != null  && persona.email != null){
+				// Guarda el inspector
+				persona.save((err,personaStored) => {
 					if(err){
-						res.status(500).send({message: 'Error al guardar el usuario'});
+						res.status(500).send({message: 'Error al guardar el inspector'});
 					}else{
-						if(!usuarioStored){
-							res.status(404).send({message: 'No se ha registrado el usuario'});
+						if(!personaStored){
+							res.status(404).send({message: 'No se ha registrado el inspector'});
 						}else
 						  {
-							res.status(200).send({usuario: usuarioStored});
+							res.status(200).send({persona: personaStored});
 						  }
 					}
 				});
@@ -95,27 +94,6 @@ function saveInspector(req, res){
 	}else{
 		res.status(500).send({message: 'Introduce la contraseña'});
 	}
-
-	var persona = new Persona();
-
-	persona.nombre = params.nombre;
-	persona.apellido = params.apellido;
-	persona.dni = params.dni;
-	persona.telefono = params.telefono;
-	persona.usuario = usuario._id;
-
-
-	persona.save((err, inspectorStored) => {
-		if(err){
-			res.status(500).send({message:'Error al guardar el inspector'});
-		}else{
-			if(!inspectorStored){
-				res.status(404).send({message:'El inspector no ha sido guardado'});
-			}else{
-				res.status(200).send({persona: inspectorStored});
-			}
-		}
-	});
 }
 
 function updateInspector(req, res){

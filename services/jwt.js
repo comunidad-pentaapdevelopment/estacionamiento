@@ -8,8 +8,8 @@ exports.createToken = function(usuario){
 	var payload = {
 		sub: usuario._id, // donde se guarda el id
 		nombreUsuario: usuario.nombreUsuario,
-		rol: usuario.rol,
 		email: usuario.email,
+		rol: usuario.rol,
 		iat: moment().unix(), // fecha de creacion del token
 		exp: moment().add(30,'days').unix  // fecha de expiracion del token cada 30 dias
 	};

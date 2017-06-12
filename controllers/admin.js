@@ -5,84 +5,84 @@ var path = require('path');
 var bcrypt = require('bcrypt-nodejs');
 var mongoosePaginate = require ('mongoose-Pagination');
 var Persona = require('../models/persona');
-var Usuario = require('../models/usuario');
 var jwt = require('../services/jwt');
 
 function getAdmin(req, res){
 	var adminId = req.params.id;
-    
-	Persona.findById(adminId, (err, admin) =>{
-		var usuarioId = admin.usuario;
 
-		Usuario.findById(usuarioId, (err, usuario) =>{
-			if(err){
+	Persona.findById(adminId, (err, admin) =>{
+		if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
-			if(usuario.rol != 'Admin'){
+			if(!admin){
+				res.status(404).send({message: 'El admin no existe'});
+			}else{
+				if(admin.rol.descripcion != "Admin"){
 				res.status(404).send({message: 'El rol no es admin'});
 			}else{
-				if(!admin){
-				res.status(404).send({message: 'El admin no existe'});
-				}else{
-				res.status(200).send({admin});
-					}	
+					res.status(200).send({admin});
 				}
 			}
-		});	
+		}
 	});
 }
 
 function getAdmins(req, res){
-	var usuarioId = req.params.Usuario;
-
-	if (!usuarioId) {
-		// sacar todos los admins de la bd
-		var find = Persona.find({}).sort('apellido'); // sort es para ordenar
+	if(req.params.page){
+		var page = req.params.page;
 	}else{
-		// sacar los admins de un usuario concreto de la bd
-		var find = Persona.find({usuario: usuarioId}).sort('nombreUsuario');
+		var page = 1;
 	}
+	var itemsPerPage = 4;
 
-	find.populate({path: 'usuario'}).exec((err, admins) =>{
+
+	Persona.find({'rol.descripcion': 'Admin'}).sort('rol.apellido').paginate(page, itemsPerPage, function(err,admins,total){
+
 		if(err){
-			res.status(500).send({message: 'Error en la petición'});
+			res.status(500).send({message:'Error en la petición'});
 		}else{
 			if(!admins){
-				res.status(404).send({message: 'No hay admins'});
+				res.status(404).send({message:'No hay admins!!'});
 			}else{
-				res.status(200).send({admins});
+				return res.status(200).send({
+					total_items: total,
+					admins: admins
+				});
 			}
 		}
 	});
 }
 
 function saveAdmin(req, res){
-	// Este metodo guarda un usuario primero y luego el admin con el objeto de usuario
-
-	var usuario = new Usuario();
+	var persona = new Persona();
 
 	var params = req.body;
 
-	usuario.nombreUsuario = params.nombreUsuario;
-	usuario.rol = "Admin";
-	usuario.email = params.email;
+	var rol = persona.rol;
+
+	persona.nombreUsuario = params.nombreUsuario;
+	persona.email = params.email;
+	rol.descripcion = "Admin";
+	rol.nombre = params.nombre;
+	rol.apellido = params.apellido;
+	rol.dni = params.dni;
 
 	if(params.clave){
 		// Encriptar contraseña y guardar datos
 		bcrypt.hash(params.clave,null,null,function(err,hash){
-			usuario.clave = hash;
+			persona.clave = hash;
 
-			if(usuario.nombreUsuario != null  && usuario.email != null){
-				// Guarda el usuario
-				usuario.save((err,usuarioStored) => {
+			if(persona.nombreUsuario != null  && persona.email != null){
+				// Guarda el admin
+				persona.save((err,personaStored) => {
 					if(err){
-						res.status(500).send({message: 'Error al guardar el usuario'});
+						res.status(500).send({message: 'Error al guardar el admin'});
 					}else{
-						if(!usuarioStored){
-							res.status(404).send({message: 'No se ha registrado el usuario'});
+						if(!personaStored){
+							res.status(404).send({message: 'No se ha registrado el admin'});
 						}else
 						  {
-							res.status(200).send({usuario: usuarioStored});
+							res.status(200).send({persona: personaStored});
 						  }
 					}
 				});
@@ -95,27 +95,6 @@ function saveAdmin(req, res){
 	}else{
 		res.status(500).send({message: 'Introduce la contraseña'});
 	}
-
-	var persona = new Persona();
-
-	persona.nombre = params.nombre;
-	persona.apellido = params.apellido;
-	persona.dni = params.dni;
-	persona.telefono = params.telefono;
-	persona.usuario = usuario._id;
-
-
-	persona.save((err, adminStored) => {
-		if(err){
-			res.status(500).send({message:'Error al guardar el admin'});
-		}else{
-			if(!adminStored){
-				res.status(404).send({message:'El admin no ha sido guardado'});
-			}else{
-				res.status(200).send({persona: adminStored});
-			}
-		}
-	});
 }
 
 function updateAdmin(req, res){

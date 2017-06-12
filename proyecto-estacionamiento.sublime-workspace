@@ -4,36 +4,224 @@
 		"selected_items":
 		[
 			[
-				"up",
-				"update"
+				"cu",
+				"cuadras"
+			],
+			[
+				"cua",
+				"cuadras"
+			],
+			[
+				"ope",
+				"operador"
+			],
+			[
+				"op",
+				"operadorId"
+			],
+			[
+				"pun",
+				"puntoVentas"
+			],
+			[
+				"nomb",
+				"nombreFantasia"
+			],
+			[
+				"P",
+				"PuntoVenta"
+			],
+			[
+				"mu",
+				"municipales"
+			],
+			[
+				"mun",
+				"municipal"
+			],
+			[
+				"mn",
+				"municipalId"
+			],
+			[
+				"muni",
+				"municipalId"
+			],
+			[
+				"ins",
+				"inspector"
+			],
+			[
+				"is",
+				"inspector"
+			],
+			[
+				"adm",
+				"admins"
+			],
+			[
+				"Ad",
+				"admins"
+			],
+			[
+				"ad",
+				"admins"
+			],
+			[
+				"per",
+				"personaStored"
+			],
+			[
+				"cond",
+				"conductor"
+			],
+			[
+				"str",
+				"String"
+			],
+			[
+				"usu",
+				"usuario"
 			],
 			[
 				"con",
-				"ConductorController"
+				"conductores"
+			],
+			[
+				"Per",
+				"Persona"
+			],
+			[
+				"fin",
+				"find"
+			],
+			[
+				"get",
+				"getAdmins"
+			],
+			[
+				"upd",
+				"updateAdmin"
+			],
+			[
+				"save",
+				"saveAdmin"
+			],
+			[
+				"us",
+				"usuario"
+			],
+			[
+				"pu",
+				"puntoVentaId"
+			],
+			[
+				"punto",
+				"puntoVentaId"
+			],
+			[
+				"punt",
+				"puntoVenta"
+			],
+			[
+				"nom",
+				"nombreFantasia"
+			],
+			[
+				"Pun",
+				"PuntoVentaController"
+			],
+			[
+				"ro",
+				"routes"
+			],
+			[
+				"Ope",
+				"OperadorDePlaya"
+			],
+			[
+				"OPE",
+				"operador"
+			],
+			[
+				"oper",
+				"operadorId"
+			],
+			[
+				"r",
+				"rol"
+			],
+			[
+				"u",
+				"usuario"
+			],
+			[
+				"conduc",
+				"conductores"
+			],
+			[
+				"nombre",
+				"nombreUsuario"
+			],
+			[
+				"fo",
+				"for	for (…) {…}"
+			],
+			[
+				"usua",
+				"usuarioId"
+			],
+			[
+				"condu",
+				"conductor"
+			],
+			[
+				"up",
+				"updateUsuario"
+			],
+			[
+				"log",
+				"loginUsuario"
+			],
+			[
+				"Usua",
+				"UsuarioSchema"
+			],
+			[
+				"no",
+				"nombreUsuario"
+			],
+			[
+				"n",
+				"nombreUsuario"
+			],
+			[
+				"login",
+				"LoginController"
+			],
+			[
+				"cuad",
+				"cuadra"
+			],
+			[
+				"O",
+				"OperadorDePlaya"
+			],
+			[
+				"o",
+				"OperadorDePlaya"
+			],
+			[
+				"Op",
+				"getOperadorDePlaya"
 			],
 			[
 				"upda",
 				"updateConductor"
 			],
 			[
-				"condu",
-				"conductorUpdated"
-			],
-			[
-				"per",
-				"persona_routes"
-			],
-			[
 				"PER",
 				"persona"
-			],
-			[
-				"cua",
-				"CuadraSchema"
-			],
-			[
-				"Per",
-				"PersonaSchema"
 			],
 			[
 				"esta",
@@ -116,10 +304,6 @@
 				"_route"
 			],
 			[
-				"str",
-				"string"
-			],
-			[
 				"art",
 				"artist"
 			],
@@ -176,10 +360,6 @@
 				"GLOBAL"
 			],
 			[
-				"pu",
-				"public"
-			],
-			[
 				"ale",
 				"alertRegister"
 			],
@@ -200,10 +380,6 @@
 				"errorMessage"
 			],
 			[
-				"get",
-				"gethash"
-			],
-			[
 				"User",
 				"UserService"
 			],
@@ -222,10 +398,6 @@
 			[
 				"uplo",
 				"uploadFile"
-			],
-			[
-				"upd",
-				"updateSong"
 			],
 			[
 				"upa",
@@ -252,14 +424,6 @@
 				"songRemoved"
 			],
 			[
-				"fin",
-				"findById"
-			],
-			[
-				"save",
-				"saveArtist"
-			],
-			[
 				"path",
 				"path_file"
 			],
@@ -270,10 +434,6 @@
 			[
 				"req",
 				"require"
-			],
-			[
-				"us",
-				"user_routes"
 			],
 			[
 				"Ar",
@@ -316,10 +476,6 @@
 				"input	Tag"
 			],
 			[
-				"ro",
-				"routeParams"
-			],
-			[
 				"te",
 				"templates"
 			],
@@ -334,10 +490,6 @@
 			[
 				"fon",
 				"font-size"
-			],
-			[
-				"u",
-				"ul	Tag"
 			],
 			[
 				"f",
@@ -362,95 +514,11 @@
 			[
 				"modal",
 				"modalInstance"
-			],
-			[
-				"conet",
-				"content"
-			],
-			[
-				"pad",
-				"padding-bottom"
-			],
-			[
-				"tar",
-				"tareas"
-			],
-			[
-				"tare",
-				"tareasEnAlmacen"
-			],
-			[
-				"bow",
-				"bower_components"
-			],
-			[
-				"grun",
-				"grunt-contrib-jshint"
-			],
-			[
-				"js",
-				"jshint"
-			],
-			[
-				"bor",
-				"border"
-			],
-			[
-				"bord",
-				"border-radius"
-			],
-			[
-				"fun",
-				"function"
-			],
-			[
-				"fo",
-				"font-style"
-			],
-			[
-				"co",
-				"color"
-			],
-			[
-				"al",
-				"AlumnoController"
 			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "models/persona.js",
-			"settings":
-			{
-				"buffer_size": 407,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "controllers/conductor.js",
-			"settings":
-			{
-				"buffer_size": 1789,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "routes/persona.js",
-			"settings":
-			{
-				"buffer_size": 407,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app.js",
-			"settings":
-			{
-				"buffer_size": 746,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -476,10 +544,27 @@
 	},
 	"file_history":
 	[
-		"/C/wamp64/www/Proyectos/Estacionamiento/models/cuadra.js",
-		"/C/wamp64/www/Proyectos/Estacionamiento/models/cuadra",
-		"/C/wamp64/www/Proyectos/Estacionamiento/app.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/controllers/operadorDePlaya.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/routes/persona.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/controllers/conductor.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/controllers/puntoVenta.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/controllers/municipal.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/controllers/inspector.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/controllers/admin.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/controllers/usuario.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/models/persona.js",
 		"/C/wamp64/www/Proyectos/Estacionamiento/services/jwt.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/app.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/routes/puntoVenta.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/routes/cuadra.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/models/puntoVenta.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/models/cuadra.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/controllers/cuadra.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/routes/usuario.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/models/usuario.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/controllers/login.js",
+		"/C/wamp64/www/Proyectos/Estacionamiento/controllers/operadorDePlaya",
+		"/C/wamp64/www/Proyectos/Estacionamiento/models/cuadra",
 		"/C/wamp64/www/Proyectos/Estacionamiento/index.js",
 		"/C/wamp64/www/Proyectos/Estacionamiento/package.json",
 		"/C/wamp64/www/Proyectos/Estacionamiento/middlewares/authenticated.js",
@@ -586,24 +671,7 @@
 		"/C/wamp64/www/Proyectos/Musify/models/artist.js",
 		"/C/wamp64/www/Proyectos/Musify/models/user.js",
 		"/C/wamp64/www/Proyectos/Musify/index.js",
-		"/C/wamp64/www/Proyectos/Musify/proyecto-musify.json",
-		"/C/xampp/htdocs/sistemaGastos/application/config/config.php",
-		"/C/xampp/htdocs/sistemaGastos/application/config/autoload.php",
-		"/C/xampp/htdocs/sistemaGastos/.htaccess",
-		"/C/xampp/htdocs/sistemaGastos/application/views/consultar.php",
-		"/C/xampp/htdocs/sistemaGastos/application/views/cargar.php",
-		"/C/xampp/htdocs/sistemaGastos/application/controllers/sistema.php",
-		"/C/xampp/htdocs/sistemaGastos/application/views/includes/header.php",
-		"/C/xampp/htdocs/sistemaGastos/application/views/includes/header_sistema.php",
-		"/C/xampp/htdocs/sistemaGastos/application/views/includes/footer_sistema.php",
-		"/C/xampp/htdocs/sistemaGastos/css/myStyle.css",
-		"/C/xampp/htdocs/sistemaGastos/application/views/includes/footer.php",
-		"/C/xampp/htdocs/sistemaGastos/application/models/modelo_categorias.php",
-		"/C/xampp/htdocs/sistemaGastos/application/models/modelo_gastos.php",
-		"/C/xampp/htdocs/sistemaGastos/application/config/database.php",
-		"/C/xampp/htdocs/sistemaGastos/application/views/exitoso.php",
-		"/C/xampp/htdocs/Cajeros/app/Http/Controllers/CajerosController.php",
-		"/C/xampp/htdocs/Cajeros/resources/views/localizar.php"
+		"/C/wamp64/www/Proyectos/Musify/proyecto-musify.json"
 	],
 	"find":
 	{
@@ -641,114 +709,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "models/persona.js",
-					"settings":
-					{
-						"buffer_size": 407,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								343,
-								343
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "controllers/conductor.js",
-					"settings":
-					{
-						"buffer_size": 1789,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1734,
-								1734
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "routes/persona.js",
-					"settings":
-					{
-						"buffer_size": 407,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								322,
-								340
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app.js",
-					"settings":
-					{
-						"buffer_size": 746,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								720,
-								720
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 57.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
